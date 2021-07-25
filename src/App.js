@@ -1,12 +1,12 @@
 import logo from "./logo.svg";
 import "./App.css";
-import Letter from "./Letter";
+import Game from "./Game";
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <Letter letter="a" />
+        <Game></Game>
         {/* <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.js</code> and save to reload.
