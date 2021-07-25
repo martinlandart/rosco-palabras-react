@@ -21,7 +21,7 @@ export default function Game() {
   };
 
   const handleSubmit = (answer) => {
-    alert(answer);
+    console.log(answer);
   };
 
   return (

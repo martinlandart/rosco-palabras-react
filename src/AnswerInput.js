@@ -9,7 +9,11 @@ export default function AnswerInput(props) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    props.handleSubmit(answer);
+
+    const ans = answer;
+    setAnswer("");
+
+    props.handleSubmit(ans);
   };
 
   return (
@@ -26,9 +30,10 @@ export default function AnswerInput(props) {
             type="text"
             name="answer"
             id="answer"
-            className="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
+            className="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md text-black"
             placeholder="Type here"
             onChange={updateAnswer}
+            value={answer}
           />
         </form>
       </div>
