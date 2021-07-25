@@ -22,6 +22,22 @@ export default function Game() {
 
   const handleSubmit = (answer) => {
     console.log(answer);
+
+    const updatedLetters = letters.slice();
+
+    const currIndex = updatedLetters.findIndex((l) => l.isCurrent === true);
+
+    let currLetter = updatedLetters[currIndex];
+    currLetter.answerState = "correct";
+    currLetter.isCurrent = false;
+
+    updatedLetters[currIndex] = currLetter;
+
+    updatedLetters[
+      updatedLetters[currIndex + 1] ? currIndex + 1 : 0
+    ].isCurrent = true;
+
+    setLetters(updatedLetters);
   };
 
   return (
