@@ -28,7 +28,12 @@ export default function Game() {
     const currIndex = updatedLetters.findIndex((l) => l.isCurrent === true);
 
     let currLetter = updatedLetters[currIndex];
-    currLetter.answerState = "correct";
+
+    if (currLetter.letter === "b") {
+      currLetter.answerState = "incorrect";
+    } else {
+      currLetter.answerState = "correct"; // replace with API call later
+    }
     currLetter.isCurrent = false;
 
     updatedLetters[currIndex] = currLetter;
