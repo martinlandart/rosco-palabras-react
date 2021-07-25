@@ -55,7 +55,8 @@
   height: 20px;
   /* border-radius: 50%; */
   color: white;
-  left: 0;
+  left: -9px;
+  bottom: -12px;
 }
 
 @keyframes App-logo-spin {

@@ -1,6 +1,5 @@
 import "./App.css";
 import Game from "./Game";
-import Circle from "./Circle";
 
 function App() {
   return (
