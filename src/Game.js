@@ -4,15 +4,15 @@ import Letter from "./Letter";
 
 export default function Game() {
   const initState = [];
-  initState.push({ letter: "a", answerState: null });
-  initState.push({ letter: "b", answerState: null });
-  initState.push({ letter: "c", answerState: null });
-  initState.push({ letter: "d", answerState: null });
-  initState.push({ letter: "e", answerState: null });
-  initState.push({ letter: "f", answerState: null });
-  initState.push({ letter: "g", answerState: null });
-  initState.push({ letter: "h", answerState: null });
-  initState.push({ letter: "i", answerState: null });
+  initState.push({ letter: "a", answerState: null, isCurrent: true });
+  initState.push({ letter: "b", answerState: null, isCurrent: false });
+  initState.push({ letter: "c", answerState: null, isCurrent: false });
+  initState.push({ letter: "d", answerState: null, isCurrent: false });
+  initState.push({ letter: "e", answerState: null, isCurrent: false });
+  initState.push({ letter: "f", answerState: null, isCurrent: false });
+  initState.push({ letter: "g", answerState: null, isCurrent: false });
+  initState.push({ letter: "h", answerState: null, isCurrent: false });
+  initState.push({ letter: "i", answerState: null, isCurrent: false });
 
   const [letters, setLetters] = useState(initState);
 
@@ -32,6 +32,7 @@ export default function Game() {
             key={l.letter}
             value={l.letter}
             answerState={l.answerState}
+            isCurrent={l.isCurrent}
             onClick={(letter) => handleClick(letter)}
           ></Letter>
         ))}
