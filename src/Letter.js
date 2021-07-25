@@ -1,12 +1,11 @@
 import React from "react";
+import { answerStates } from "./constants";
 
 export default function Letter(props) {
   let bgColor = "bg-purple-700";
 
-  console.log(props.answerState);
-
-  if (props.answerState) {
-    if (props.answerState === "correct") {
+  if (props.answerState !== answerStates.NotAnswered) {
+    if (props.answerState === answerStates.Correct) {
       bgColor = "bg-green-700";
     } else {
       bgColor = "bg-red-700";
@@ -14,12 +13,11 @@ export default function Letter(props) {
   }
 
   return (
-    <div>
-      <span></span>
+    <div className="square">
       <label>
         <button
-          className={`w-9 h-9 flex items-center justify-center rounded-full text-white 
-          ${props.isCurrent ? "border-solid border-4 border-white" : ""} 
+          className={`w-9 h-9 flex items-center justify-center rounded-full text-white font-mono
+          ${props.isCurrent ? "border-solid border-4 border-white" : ""}
           ${bgColor}
           `}
           name="size"

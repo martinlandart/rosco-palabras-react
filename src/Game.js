@@ -1,62 +1,86 @@
 import React, { useState } from "react";
 import AnswerInput from "./AnswerInput";
+import { answerStates } from "./constants";
 import Letter from "./Letter";
+import Circle from "./Circle";
+
+const calculateNext = (current, letterKeys) => {
+  const currIndex = letterKeys.indexOf(current);
+
+  return letterKeys[letterKeys[currIndex + 1] ? currIndex + 1 : 0];
+};
 
 export default function Game() {
-  const initState = [];
-  initState.push({ letter: "a", answerState: null, isCurrent: true });
-  initState.push({ letter: "b", answerState: null, isCurrent: false });
-  initState.push({ letter: "c", answerState: null, isCurrent: false });
-  initState.push({ letter: "d", answerState: null, isCurrent: false });
-  initState.push({ letter: "e", answerState: null, isCurrent: false });
-  initState.push({ letter: "f", answerState: null, isCurrent: false });
-  initState.push({ letter: "g", answerState: null, isCurrent: false });
-  initState.push({ letter: "h", answerState: null, isCurrent: false });
-  initState.push({ letter: "i", answerState: null, isCurrent: false });
+  const initState = {
+    a: { definition: "", answerState: answerStates.NotAnswered },
+    b: { definition: "", answerState: answerStates.NotAnswered },
+    c: { definition: "", answerState: answerStates.NotAnswered },
+    d: { definition: "", answerState: answerStates.NotAnswered },
+    e: { definition: "", answerState: answerStates.NotAnswered },
+    f: { definition: "", answerState: answerStates.NotAnswered },
+    g: { definition: "", answerState: answerStates.NotAnswered },
+    h: { definition: "", answerState: answerStates.NotAnswered },
+    i: { definition: "", answerState: answerStates.NotAnswered },
+    j: { definition: "", answerState: answerStates.NotAnswered },
+    l: { definition: "", answerState: answerStates.NotAnswered },
+    m: { definition: "", answerState: answerStates.NotAnswered },
+    n: { definition: "", answerState: answerStates.NotAnswered },
+    ñ: { definition: "", answerState: answerStates.NotAnswered },
+    o: { definition: "", answerState: answerStates.NotAnswered },
+    p: { definition: "", answerState: answerStates.NotAnswered },
+    q: { definition: "", answerState: answerStates.NotAnswered },
+    r: { definition: "", answerState: answerStates.NotAnswered },
+    s: { definition: "", answerState: answerStates.NotAnswered },
+    t: { definition: "", answerState: answerStates.NotAnswered },
+    u: { definition: "", answerState: answerStates.NotAnswered },
+    v: { definition: "", answerState: answerStates.NotAnswered },
+    x: { definition: "", answerState: answerStates.NotAnswered },
+    y: { definition: "", answerState: answerStates.NotAnswered },
+    z: { definition: "", answerState: answerStates.NotAnswered },
+  };
 
   const [letters, setLetters] = useState(initState);
+  const [currentLetter, setCurrentLetter] = useState("a");
 
   const handleClick = (letter) => {
     console.log(letter);
   };
 
   const handleSubmit = (answer) => {
-    console.log(answer);
-
-    const updatedLetters = letters.slice();
-
-    const currIndex = updatedLetters.findIndex((l) => l.isCurrent === true);
-
-    let currLetter = updatedLetters[currIndex];
-
-    if (currLetter.letter === "b") {
-      currLetter.answerState = "incorrect";
+    let answerResult;
+    if (currentLetter === "b") {
+      answerResult = answerStates.Incorrect;
     } else {
-      currLetter.answerState = "correct"; // replace with API call later
+      answerResult = answerStates.Correct; // replace with API call later
     }
-    currLetter.isCurrent = false;
 
-    updatedLetters[currIndex] = currLetter;
+    setLetters((prevState) => {
+      console.log("set");
 
-    updatedLetters[
-      updatedLetters[currIndex + 1] ? currIndex + 1 : 0
-    ].isCurrent = true;
+      prevState[currentLetter] = { definition: "", answerState: answerResult };
 
-    setLetters(updatedLetters);
+      return prevState;
+    });
+
+    setCurrentLetter((prevState) =>
+      calculateNext(prevState, Object.keys(letters))
+    );
   };
 
   return (
     <div className="grid grid-rows-3">
       <div className="flex row-span-2">
-        {letters.map((l) => (
-          <Letter
-            key={l.letter}
-            value={l.letter}
-            answerState={l.answerState}
-            isCurrent={l.isCurrent}
-            onClick={(letter) => handleClick(letter)}
-          ></Letter>
-        ))}
+        <Circle>
+          {Object.keys(letters).map((l, i) => (
+            <Letter
+              key={l}
+              value={l}
+              answerState={letters[l].answerState}
+              isCurrent={l === currentLetter}
+              onClick={(letter) => handleClick(letter)}
+            ></Letter>
+          ))}
+        </Circle>
       </div>
       <div className="flex row-span-1">
         <AnswerInput
