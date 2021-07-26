@@ -7,10 +7,21 @@ import CountdownTimer from "./CountdownTimer";
 import Score from "./Score";
 import { createGame, checkAnswer } from "./ApiService";
 
-const calculateNext = (current, letterKeys) => {
+const calculateNext = (current, letters) => {
+  const letterKeys = Object.keys(letters);
   const currIndex = letterKeys.indexOf(current);
 
-  return letterKeys[letterKeys[currIndex + 1] ? currIndex + 1 : 0];
+  if (letters[letterKeys[currIndex + 1]]) {
+    if (
+      letters[letterKeys[currIndex + 1]].answerState ===
+      answerStates.NotAnswered
+    ) {
+      return letterKeys[currIndex + 1];
+    } else {
+      return calculateNext(letterKeys[currIndex + 1], letters);
+    }
+  }
+  return calculateNext(letterKeys[0], letters);
 };
 
 const initState = {
@@ -61,7 +72,6 @@ export default function Game() {
     const asyncWrapper = async () => {
       const createdGame = await createGame();
 
-      console.log(createdGame);
       let newState = {};
 
       Object.keys(createdGame).forEach((l) => {
@@ -84,36 +94,31 @@ export default function Game() {
     asyncWrapper();
   }, []);
 
-  const handleClick = (letter) => {
-    console.log(letter);
-  };
-
   const handleSubmit = async (answer) => {
     let answerResult;
 
-    const isCorrect = await checkAnswer(letters[currentLetter].id, answer);
+    if (answer) {
+      const isCorrect = await checkAnswer(letters[currentLetter].id, answer);
 
-    if (isCorrect) {
-      answerResult = answerStates.Correct;
-      setScore(score + 1); // replace with API call later
-    } else {
-      answerResult = answerStates.Incorrect;
+      if (isCorrect) {
+        answerResult = answerStates.Correct;
+        setScore(score + 1); // replace with API call later
+      } else {
+        answerResult = answerStates.Incorrect;
+      }
+
+      setLetters((prevState) => {
+        const newState = { ...prevState };
+
+        newState[currentLetter] = {
+          ...newState[currentLetter],
+          answerState: answerResult,
+        };
+
+        return newState;
+      });
     }
-
-    setLetters((prevState) => {
-      const newState = { ...prevState };
-
-      newState[currentLetter] = {
-        ...newState[currentLetter],
-        answerState: answerResult,
-      };
-
-      return newState;
-    });
-
-    setCurrentLetter((prevState) =>
-      calculateNext(prevState, Object.keys(letters))
-    );
+    setCurrentLetter((prevState) => calculateNext(prevState, letters));
   };
 
   const onComplete = () => {
@@ -156,7 +161,6 @@ export default function Game() {
                   value={l}
                   answerState={letters[l].answerState}
                   isCurrent={l === currentLetter}
-                  onClick={(letter) => handleClick(letter)}
                 ></Letter>
               ))}
             </Circle>

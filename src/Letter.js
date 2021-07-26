@@ -23,7 +23,6 @@ export default function Letter(props) {
           name="size"
           type="radio"
           value={props.value}
-          onClick={() => props.onClick(props.value)}
         >
           {props.value}
         </button>
