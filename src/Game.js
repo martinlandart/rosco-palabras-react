@@ -1,9 +1,10 @@
-import React, { useCallback, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import AnswerInput from "./AnswerInput";
 import { answerStates } from "./constants";
 import Letter from "./Letter";
 import Circle from "./Circle";
 import CountdownTimer from "./CountdownTimer";
+import Score from "./Score";
 
 const calculateNext = (current, letterKeys) => {
   const currIndex = letterKeys.indexOf(current);
@@ -13,11 +14,11 @@ const calculateNext = (current, letterKeys) => {
 
 const initState = {
   a: {
-    definition: "Definicion jajajasjdaksdjaksdjasdjaslkdjas",
+    definition: "",
     answerState: answerStates.NotAnswered,
   },
   b: {
-    definition: "Definicion bbbasdadsasdasd",
+    definition: "",
     answerState: answerStates.NotAnswered,
   },
   c: { definition: "", answerState: answerStates.NotAnswered },
@@ -45,16 +46,15 @@ const initState = {
   z: { definition: "", answerState: answerStates.NotAnswered },
 };
 
-const initialTime = 500;
+const initialTime = 15;
 
 export default function Game() {
   const [letters, setLetters] = useState(initState);
   const [currentLetter, setCurrentLetter] = useState("a");
-  const [date, setDate] = useState(Date.now() + 4 * 1000);
-
-  let timeLeft = initialTime;
-
-  const timerRef = useRef({});
+  const [date, setDate] = useState();
+  const [gameIsRunning, setGameIsRunning] = useState(false);
+  const [gameIsFinished, setGameIsFinished] = useState(false);
+  const [score, setScore] = useState(0);
 
   const handleClick = (letter) => {
     console.log(letter);
@@ -66,15 +66,19 @@ export default function Game() {
     if (currentLetter === "b") {
       answerResult = answerStates.Incorrect;
     } else {
-      answerResult = answerStates.Correct; // replace with API call later
+      answerResult = answerStates.Correct;
+      setScore(score + 1); // replace with API call later
     }
 
     setLetters((prevState) => {
-      console.log("set");
+      const newState = { ...prevState };
 
-      prevState[currentLetter] = { definition: "", answerState: answerResult };
+      newState[currentLetter] = {
+        ...newState[currentLetter],
+        answerState: answerResult,
+      };
 
-      return prevState;
+      return newState;
     });
 
     setCurrentLetter((prevState) =>
@@ -82,43 +86,68 @@ export default function Game() {
     );
   };
 
-  const logOnTick = (time) => {
-    timeLeft = time.total / 1000;
-    console.log(timeLeft);
+  const onComplete = () => {
+    endGame();
   };
 
-  const onComplete = () => {
-    console.log("Time completed");
+  const startGame = () => {
+    setDate(Date.now() + initialTime * 1000);
+    setGameIsRunning(true);
   };
+
+  const endGame = () => {
+    setGameIsFinished(true);
+    setCurrentLetter(null);
+  };
+
+  useEffect(() => {
+    if (gameIsFinished) {
+      console.log("Armar reporte de fin del juego");
+    }
+
+    if (
+      !Object.values(letters).some(
+        (l) => l.answerState === answerStates.NotAnswered
+      )
+    ) {
+      endGame();
+    }
+  }, [letters, gameIsFinished]);
 
   return (
     <>
-      <div>
-        <Circle definition={letters[currentLetter].definition}>
-          {Object.keys(letters).map((l, i) => (
-            <Letter
-              key={l}
-              value={l}
-              answerState={letters[l].answerState}
-              isCurrent={l === currentLetter}
-              onClick={(letter) => handleClick(letter)}
-            ></Letter>
-          ))}
-        </Circle>
-      </div>
-      <div>
-        <AnswerInput
-          handleSubmit={(answer) => handleSubmit(answer)}
-        ></AnswerInput>
-      </div>
-      <CountdownTimer
-        timerRef={timerRef}
-        initialTime={initialTime}
-        isPaused={false}
-        onTick={logOnTick}
-        date={date}
-        onComplete={onComplete}
-      ></CountdownTimer>
+      {gameIsRunning ? (
+        <>
+          <Score correctAnswers={score} />
+          <div>
+            <Circle definition={letters[currentLetter]?.definition}>
+              {Object.keys(letters).map((l, i) => (
+                <Letter
+                  key={l}
+                  value={l}
+                  answerState={letters[l].answerState}
+                  isCurrent={l === currentLetter}
+                  onClick={(letter) => handleClick(letter)}
+                ></Letter>
+              ))}
+            </Circle>
+          </div>
+          <div>
+            <AnswerInput
+              handleSubmit={(answer) => handleSubmit(answer)}
+            ></AnswerInput>
+          </div>
+          <CountdownTimer
+            pauseCallback={endGame}
+            initialTime={initialTime}
+            isPaused={gameIsFinished}
+            date={date}
+            onComplete={onComplete}
+          ></CountdownTimer>
+        </>
+      ) : (
+        <button onClick={startGame}>Start game</button>
+      )}
     </>
   );
 }

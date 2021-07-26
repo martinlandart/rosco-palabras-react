@@ -40,7 +40,7 @@ const Circle = (props) => {
             const css = value;
             return (
               <div
-                className=""
+                key={index}
                 style={{
                   transform:
                     "rotate(" +

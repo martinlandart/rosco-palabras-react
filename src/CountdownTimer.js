@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import Countdown from "react-countdown";
 
 const Completionist = () => <span>You are good to go!</span>;
@@ -14,21 +14,23 @@ const renderer = ({ hours, minutes, seconds, completed }) => {
   }
 };
 
-export default function CountdownTimer(props) {
-  console.log("asdasd");
+export default function CountdownTimer({ onComplete, date, isPaused }) {
+  const timerRef = useRef({});
+
+  useEffect(() => {
+    if (isPaused) {
+      timerRef.current.pause();
+    }
+  }, [isPaused]);
 
   return (
-    // tiempo actual, isCompleted
-
-    // full api
-
     <div>
       <Countdown
-        onComplete={props.onComplete}
-        date={props.date}
+        ref={timerRef}
+        onComplete={onComplete}
+        date={date}
         renderer={renderer}
         autoStart={true}
-        onTick={props.onTick}
       ></Countdown>
     </div>
   );
