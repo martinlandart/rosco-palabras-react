@@ -27,6 +27,7 @@ export default function AnswerInput(props) {
         </div>
         <form onSubmit={handleSubmit}>
           <input
+            autoFocus
             type="text"
             name="answer"
             id="answer"

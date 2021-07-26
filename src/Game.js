@@ -139,7 +139,6 @@ export default function Game() {
     <>
       {gameIsRunning ? (
         <>
-          <Score correctAnswers={score} />
           <div>
             <Circle definition={letters[currentLetter]?.definition}>
               {Object.keys(letters).map((l, i) => (
@@ -152,19 +151,31 @@ export default function Game() {
                 ></Letter>
               ))}
             </Circle>
+            {gameIsFinished ? (
+              <>
+                <div>Game Finished</div>
+                <div>Your score is: {score}</div>
+              </>
+            ) : (
+              <div className="grid grid-cols-6 gap-4">
+                <div className="col-start-2 col-span-4">
+                  <AnswerInput
+                    handleSubmit={(answer) => handleSubmit(answer)}
+                  />
+                </div>
+                <div className="ml-6">
+                  <Score correctAnswers={score} />
+                </div>
+              </div>
+            )}
+            <CountdownTimer
+              pauseCallback={endGame}
+              initialTime={initialTime}
+              isPaused={gameIsFinished}
+              date={date}
+              onComplete={onComplete}
+            />
           </div>
-          <div>
-            <AnswerInput
-              handleSubmit={(answer) => handleSubmit(answer)}
-            ></AnswerInput>
-          </div>
-          <CountdownTimer
-            pauseCallback={endGame}
-            initialTime={initialTime}
-            isPaused={gameIsFinished}
-            date={date}
-            onComplete={onComplete}
-          ></CountdownTimer>
         </>
       ) : (
         <button onClick={startGame}>Start game</button>
