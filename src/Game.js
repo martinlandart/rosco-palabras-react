@@ -50,6 +50,7 @@ const initialTime = 500;
 export default function Game() {
   const [letters, setLetters] = useState(initState);
   const [currentLetter, setCurrentLetter] = useState("a");
+  const [date, setDate] = useState(Date.now() + 4 * 1000);
 
   let timeLeft = initialTime;
 
@@ -86,6 +87,10 @@ export default function Game() {
     console.log(timeLeft);
   };
 
+  const onComplete = () => {
+    console.log("Time completed");
+  };
+
   return (
     <>
       <div>
@@ -111,6 +116,8 @@ export default function Game() {
         initialTime={initialTime}
         isPaused={false}
         onTick={logOnTick}
+        date={date}
+        onComplete={onComplete}
       ></CountdownTimer>
     </>
   );

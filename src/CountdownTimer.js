@@ -16,7 +16,6 @@ const renderer = ({ hours, minutes, seconds, completed }) => {
 
 export default function CountdownTimer(props) {
   console.log("asdasd");
-  const timerRef = useRef({});
 
   return (
     // tiempo actual, isCompleted
@@ -25,8 +24,8 @@ export default function CountdownTimer(props) {
 
     <div>
       <Countdown
-        ref={timerRef}
-        date={Date.now() + props.initialTime * 1000}
+        onComplete={props.onComplete}
+        date={props.date}
         renderer={renderer}
         autoStart={true}
         onTick={props.onTick}
