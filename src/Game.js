@@ -71,6 +71,13 @@ export default function Game() {
         };
       });
 
+      newState = Object.keys(newState)
+        .sort((a, b) => a.localeCompare(b, "es"))
+        .reduce((obj, key) => {
+          obj[key] = newState[key];
+          return obj;
+        }, {});
+
       setLetters(newState);
     };
 
@@ -84,7 +91,7 @@ export default function Game() {
   const handleSubmit = async (answer) => {
     let answerResult;
 
-    const isCorrect = await checkAnswer(letters[currentLetter].guid, answer);
+    const isCorrect = await checkAnswer(letters[currentLetter].id, answer);
 
     if (isCorrect) {
       answerResult = answerStates.Correct;

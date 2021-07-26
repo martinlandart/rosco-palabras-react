@@ -9,7 +9,7 @@ export const createGame = async () => {
   try {
     const res = await instance.get("api/createGame");
 
-    return res.data;
+    return res.data.letters;
   } catch (error) {
     console.log(error.toJSON());
   }
