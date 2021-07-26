@@ -5,6 +5,7 @@ import Letter from "./Letter";
 import Circle from "./Circle";
 import CountdownTimer from "./CountdownTimer";
 import Score from "./Score";
+import { createGame, checkAnswer } from "./ApiService";
 
 const calculateNext = (current, letterKeys) => {
   const currIndex = letterKeys.indexOf(current);
@@ -55,6 +56,26 @@ export default function Game() {
   const [gameIsRunning, setGameIsRunning] = useState(false);
   const [gameIsFinished, setGameIsFinished] = useState(false);
   const [score, setScore] = useState(0);
+
+  useEffect(() => {
+    const asyncWrapper = async () => {
+      const createdGame = await createGame();
+
+      console.log(createdGame);
+      let newState = {};
+
+      Object.keys(createdGame).forEach((l) => {
+        newState[l] = {
+          ...createdGame[l],
+          answerState: answerStates.NotAnswered,
+        };
+      });
+
+      setLetters(newState);
+    };
+
+    asyncWrapper();
+  }, []);
 
   const handleClick = (letter) => {
     console.log(letter);
