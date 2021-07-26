@@ -1,0 +1,101 @@
+{
+    "source": "mockoon:1.14.1",
+    "data": [
+        {
+            "type": "environment",
+            "item": {
+                "uuid": "",
+                "lastMigration": 15,
+                "name": "Pasapalabra API",
+                "endpointPrefix": "",
+                "latency": 0,
+                "port": 8000,
+                "routes": [
+                    {
+                        "uuid": "",
+                        "documentation": "",
+                        "method": "get",
+                        "endpoint": "api/createGame",
+                        "responses": [
+                            {
+                                "uuid": "",
+                                "body": "{\n  \"letters\": {\n    \"a\": {\n      \"definition\": \"Definicion de A\",\n      \"startsWithLetter\": true,\n      \"id\": \"0\"\n    },\n    \"b\": {\n      \"definition\": \"Definicion de B\",\n      \"startsWithLetter\": true,\n      \"id\": \"1\"\n    },\n    \"c\": {\n      \"definition\": \"Defincion de c\",\n      \"startsWithLetter\": true,\n      \"id\": \"2\"\n    },\n    \"d\": {\n      \"definition\": \"Defincion de d\",\n      \"startsWithLetter\": true,\n      \"id\": \"3\"\n    },\n    \"e\": {\n      \"definition\": \"Defincion de e\",\n      \"startsWithLetter\": true,\n      \"id\": \"4\"\n    },\n    \"f\": {\n      \"definition\": \"Defincion de f\",\n      \"startsWithLetter\": true,\n      \"id\": \"5\"\n    },\n    \"g\": {\n      \"definition\": \"Defincion de g\",\n      \"startsWithLetter\": true,\n      \"id\": \"6\"\n    },\n    \"h\": {\n      \"definition\": \"Defincion de h\",\n      \"startsWithLetter\": true,\n      \"id\": \"7\"\n    },\n    \"i\": {\n      \"definition\": \"Defincion de i\",\n      \"startsWithLetter\": true,\n      \"id\": \"8\"\n    },\n    \"j\": {\n      \"definition\": \"Defincion de j\",\n      \"startsWithLetter\": true,\n      \"id\": \"9\"\n    },\n    \"l\": {\n      \"definition\": \"Defincion de l\",\n      \"startsWithLetter\": true,\n      \"id\": \"10\"\n    },\n    \"m\": {\n      \"definition\": \"Defincion de m\",\n      \"startsWithLetter\": true,\n      \"id\": \"11\"\n    },\n    \"n\": {\n      \"definition\": \"Defincion de n\",\n      \"startsWithLetter\": true,\n      \"id\": \"12\"\n    },\n    \"ñ\": {\n      \"definition\": \"Defincion de ñ\",\n      \"startsWithLetter\": true,\n      \"id\": \"13\"\n    },\n    \"o\": {\n      \"definition\": \"Defincion de o\",\n      \"startsWithLetter\": true,\n      \"id\": \"14\"\n    },\n    \"p\": {\n      \"definition\": \"Defincion de p\",\n      \"startsWithLetter\": true,\n      \"id\": \"15\"\n    },\n    \"q\": {\n      \"definition\": \"Defincion de q\",\n      \"startsWithLetter\": true,\n      \"id\": \"16\"\n    },\n    \"r\": {\n      \"definition\": \"Defincion de r\",\n      \"startsWithLetter\": true,\n      \"id\": \"17\"\n    },\n    \"s\": {\n      \"definition\": \"Defincion de s\",\n      \"startsWithLetter\": true,\n      \"id\": \"18\"\n    },\n    \"t\": {\n      \"definition\": \"Defincion de t\",\n      \"startsWithLetter\": true,\n      \"id\": \"19\"\n    },\n    \"u\": {\n      \"definition\": \"Defincion de u\",\n      \"startsWithLetter\": true,\n      \"id\": \"20\"\n    },\n    \"v\": {\n      \"definition\": \"Defincion de v\",\n      \"startsWithLetter\": true,\n      \"id\": \"21\"\n    },\n    \"x\": {\n      \"definition\": \"Defincion de x\",\n      \"startsWithLetter\": true,\n      \"id\": \"22\"\n    },\n    \"y\": {\n      \"definition\": \"Defincion de y\",\n      \"startsWithLetter\": true,\n      \"id\": \"23\"\n    },\n    \"z\": {\n      \"definition\": \"Defincion de z\",\n      \"startsWithLetter\": true,\n      \"id\": \"24\"\n    }\n  }\n}\n",
+                                "latency": 0,
+                                "statusCode": 200,
+                                "label": "",
+                                "headers": [],
+                                "filePath": "",
+                                "sendFileAsBody": false,
+                                "rules": [],
+                                "rulesOperator": "OR",
+                                "disableTemplating": false
+                            }
+                        ],
+                        "enabled": true,
+                        "randomResponse": false,
+                        "sequentialResponse": false
+                    },
+                    {
+                        "uuid": "",
+                        "documentation": "",
+                        "method": "post",
+                        "endpoint": "api/answer/:paramName1",
+                        "responses": [
+                            {
+                                "uuid": "",
+                                "body": "{\n  \"isCorrect\": true\n}",
+                                "latency": 0,
+                                "statusCode": 200,
+                                "label": "",
+                                "headers": [],
+                                "filePath": "",
+                                "sendFileAsBody": false,
+                                "rules": [],
+                                "rulesOperator": "OR",
+                                "disableTemplating": false
+                            }
+                        ],
+                        "enabled": true,
+                        "randomResponse": false,
+                        "sequentialResponse": false
+                    }
+                ],
+                "proxyMode": false,
+                "proxyHost": "",
+                "proxyRemovePrefix": false,
+                "https": false,
+                "cors": true,
+                "headers": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    },
+                    {
+                        "key": "Access-Control-Allow-Origin",
+                        "value": "*"
+                    },
+                    {
+                        "key": "Access-Control-Allow-Methods",
+                        "value": "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS"
+                    },
+                    {
+                        "key": "Access-Control-Allow-Headers",
+                        "value": "Content-Type, Origin, Accept, Authorization, Content-Length, X-Requested-With"
+                    }
+                ],
+                "proxyReqHeaders": [
+                    {
+                        "key": "",
+                        "value": ""
+                    }
+                ],
+                "proxyResHeaders": [
+                    {
+                        "key": "",
+                        "value": ""
+                    }
+                ]
+            }
+        }
+    ]
+}
