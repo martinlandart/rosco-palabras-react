@@ -1,7 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const Circle = (props) => {
   const [square, setSquare] = useState([]);
+
+  useEffect(() => {
+    buildCircle();
+  }, []);
 
   const buildCircle = () => {
     const num = 25; //Number of Square to be generate
@@ -27,7 +31,10 @@ const Circle = (props) => {
 
   return (
     <div>
-      <div className="circle">
+      <div className="circle flex">
+        <div className="w-full flex items-center justify-center text-center">
+          <p>{props.definition}</p>
+        </div>
         <div className="circle-hold">
           {square.map(function (value, index) {
             const css = value;
@@ -51,7 +58,6 @@ const Circle = (props) => {
           })}
         </div>
       </div>
-      <button onClick={buildCircle}>Show Square</button>
     </div>
   );
 };

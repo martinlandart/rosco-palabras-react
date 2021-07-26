@@ -47,7 +47,6 @@
 
 .square {
   position: absolute;
-  background: red;
   -webkit-transition: all 2s linear;
   -moz-transition: all 2s linear;
   transition: transform 2s linear;
