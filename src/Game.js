@@ -47,7 +47,7 @@ const initState = {
   z: { definition: "", answerState: answerStates.NotAnswered },
 };
 
-const initialTime = 15;
+const initialTime = 150;
 
 export default function Game() {
   const [letters, setLetters] = useState(initState);
