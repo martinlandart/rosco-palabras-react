@@ -81,14 +81,16 @@ export default function Game() {
     console.log(letter);
   };
 
-  const handleSubmit = (answer) => {
+  const handleSubmit = async (answer) => {
     let answerResult;
 
-    if (currentLetter === "b") {
-      answerResult = answerStates.Incorrect;
-    } else {
+    const isCorrect = await checkAnswer(letters[currentLetter].guid, answer);
+
+    if (isCorrect) {
       answerResult = answerStates.Correct;
       setScore(score + 1); // replace with API call later
+    } else {
+      answerResult = answerStates.Incorrect;
     }
 
     setLetters((prevState) => {

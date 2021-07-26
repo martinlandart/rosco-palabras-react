@@ -21,6 +21,8 @@ export const checkAnswer = async (questionId, answer) => {
       answer: answer,
     });
 
+    console.log(res.data);
+
     const isCorrect = res.data.isCorrect;
 
     return isCorrect;
