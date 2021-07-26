@@ -7,8 +7,7 @@ import CountdownTimer from "./CountdownTimer";
 import Score from "./Score";
 import { createGame, checkAnswer } from "./ApiService";
 
-const calculateNext = (current, letters) => {
-  const letterKeys = Object.keys(letters);
+const calculateNext = (current, letters, letterKeys) => {
   const currIndex = letterKeys.indexOf(current);
 
   if (letters[letterKeys[currIndex + 1]]) {
@@ -18,10 +17,10 @@ const calculateNext = (current, letters) => {
     ) {
       return letterKeys[currIndex + 1];
     } else {
-      return calculateNext(letterKeys[currIndex + 1], letters);
+      return calculateNext(letterKeys[currIndex + 1], letters, letterKeys);
     }
   }
-  return calculateNext(letterKeys[0], letters);
+  return calculateNext(letterKeys[0], letters, letterKeys);
 };
 
 const initState = {
@@ -118,7 +117,7 @@ export default function Game() {
         return newState;
       });
     }
-    setCurrentLetter((prevState) => calculateNext(prevState, letters));
+    setCurrentLetter((prevState) => calculateNext(prevState, letters, Object.keys(letters)));
   };
 
   const onComplete = () => {
