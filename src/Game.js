@@ -20,7 +20,7 @@ const calculateNext = (current, letters, letterKeys) => {
       return calculateNext(letterKeys[currIndex + 1], letters, letterKeys);
     }
   }
-  return calculateNext(letterKeys[0], letters, letterKeys);
+  return calculateNext(letterKeys[-1], letters, letterKeys);
 };
 
 const initState = {
