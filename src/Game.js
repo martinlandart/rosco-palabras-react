@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import AnswerInput from "./AnswerInput";
 import { answerStates } from "./constants";
 import Letter from "./Letter";
 import Circle from "./Circle";
+import CountdownTimer from "./CountdownTimer";
 
 const calculateNext = (current, letterKeys) => {
   const currIndex = letterKeys.indexOf(current);
@@ -44,9 +45,15 @@ const initState = {
   z: { definition: "", answerState: answerStates.NotAnswered },
 };
 
+const initialTime = 500;
+
 export default function Game() {
   const [letters, setLetters] = useState(initState);
   const [currentLetter, setCurrentLetter] = useState("a");
+
+  let timeLeft = initialTime;
+
+  const timerRef = useRef({});
 
   const handleClick = (letter) => {
     console.log(letter);
@@ -74,6 +81,11 @@ export default function Game() {
     );
   };
 
+  const logOnTick = (time) => {
+    timeLeft = time.total / 1000;
+    console.log(timeLeft);
+  };
+
   return (
     <>
       <div>
@@ -94,6 +106,12 @@ export default function Game() {
           handleSubmit={(answer) => handleSubmit(answer)}
         ></AnswerInput>
       </div>
+      <CountdownTimer
+        timerRef={timerRef}
+        initialTime={initialTime}
+        isPaused={false}
+        onTick={logOnTick}
+      ></CountdownTimer>
     </>
   );
 }
